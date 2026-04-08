@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyber Soda - Vendas</title>
+    <!-- Fontes modernas do Google -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Orbitron:wght@500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- A Máquina Estilizada -->
+        <main id="maquina" class="glass-panel">
+            <div class="maquina-body">
+                <!-- COLUNA ESQUERDA: Vitrine de Bebidas -->
+                <div class="maquina-vitrine">
+                    <div id="lista-refrigerantes" class="grid-refris"></div>
+                </div>
+
+                <!-- COLUNA DIREITA: Painel de Controle -->
+                <div class="maquina-painel">
+                    <header class="maquina-header">
+                        <h1><span>Refrizão</span></h1>
+                    </header>
+
+                    <div class="displays-container">
+                        <div id="painel-mensagens" class="digital-display">Bem-vindo!</div>
+                        <div id="linha-bebida" class="digital-display drink-name-line">-</div>
+                        <div id="visor" class="digital-display highlight">R$ 0.00</div>
+                    </div>
+
+                    <div class="interacao-container">
+                        <div id="ranhura-moedas" class="coin-slot">
+                            <span>MOEDAS</span>
+                            <div class="slot-hole"></div>
+                        </div>
+                    </div>
+
+                    <!-- Dispenser de Saída -->
+                    <div id="dispenser" class="dispenser-container">
+                        <div class="dispenser-bin"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Lado direito: Sua Carteira -->
+        <aside id="carteira" class="glass-panel wallet-panel">
+            <h2>Sua Carteira</h2>
+            <p>Arraste as moedas para a ranhura da máquina.</p>
+            <div class="moedas-container">
+                <div class="moeda moeda-bronze" draggable="true" data-valor="0.25">25¢</div>
+                <div class="moeda moeda-prata" draggable="true" data-valor="0.50">50¢</div>
+                <div class="moeda moeda-ouro" draggable="true" data-valor="1.00">R$1</div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Script no final do body para não bloquear o layout -->
+    <script src="script.js"></script>
+</body>
+
+</html>

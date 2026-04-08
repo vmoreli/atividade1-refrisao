@@ -1,0 +1,473 @@
+/* Globais e Variáveis */
+:root {
+    --bg-gradient: radial-gradient(circle at top right, #1a1025 0%, #000000 100%);
+    --glass-bg: rgba(255, 255, 255, 0.03);
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+
+    --neon-cyan: #0ff;
+    --neon-green: #39ff14;
+
+    --font-main: 'Outfit', sans-serif;
+    --font-digital: 'Orbitron', monospace;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: var(--bg-gradient);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: var(--font-main);
+    color: #fff;
+    overflow: hidden;
+}
+
+/* Layout Principal */
+.app-container {
+    display: flex;
+    gap: 1.5rem;
+    max-width: 1200px;
+    width: 95%;
+    padding: 1vh 0;
+    height: 98vh;
+    max-height: 98vh;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: stretch;
+}
+
+/* Painéis Glassmorphism (Efeito Vidro Premium) */
+.glass-panel {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    box-shadow: var(--glass-shadow);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    padding: 1rem 1.5rem;
+    max-height: 100%;
+}
+
+/* --- MÁQUINA --- */
+#maquina {
+    width: fit-content;
+    height: 100%;
+    /* Ocupa toda a altura do container (98vh) */
+    max-width: 95vw;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+    padding: 0;
+}
+
+.maquina-body {
+    display: flex;
+    height: 100%;
+    align-items: stretch;
+}
+
+/* Coluna da Vitrine (Esquerda) */
+.maquina-vitrine {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    background: rgba(0, 0, 0, 0.2);
+    box-shadow: inset -10px 0 20px rgba(0, 0, 0, 0.3);
+    width: fit-content;
+}
+
+/* Coluna do Painel (Direita) */
+.maquina-painel {
+    width: 280px;
+    /* Painel mais largo para melhor leitura das mensagens */
+    flex-shrink: 0;
+    padding: 1.5rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.02), transparent);
+    border-left: 1px solid var(--glass-border);
+}
+
+/* Efeito sutil de reflexo na quina para dar sensação 3D */
+#maquina::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(105deg, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+.maquina-header h1 {
+    font-size: 1.4rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+    text-align: center;
+    margin-bottom: 0.5rem;
+}
+
+.maquina-header h1 span {
+    color: var(--neon-cyan);
+    font-family: var(--font-digital);
+}
+
+/* Telinhas digitais estilo anos 80/90 */
+.displays-container {
+    background: #090a0f;
+    border: 2px solid #222;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.9);
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.digital-display {
+    font-family: var(--font-digital);
+    font-size: 0.75rem;
+    color: var(--neon-green);
+    text-shadow: 0 0 8px rgba(57, 255, 20, 0.4);
+    letter-spacing: 1px;
+    line-height: 1.4;
+
+    /* Prevenção de quebra de layout com texto longo - agora com wrap */
+    white-space: normal;
+    word-break: break-word;
+    width: 100%;
+}
+
+#painel-mensagens {
+    min-height: 55px; /* Garante espaço para até 3 linhas */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.drink-name-line {
+    color: var(--neon-cyan);
+    font-weight: 600;
+    text-transform: uppercase;
+    text-align: center;
+    border-top: 1px solid #1a1a1a;
+    padding-top: 0.5rem;
+    font-size: 0.8rem;
+}
+
+.digital-display.highlight {
+    font-size: 1.3rem;
+    color: var(--neon-cyan);
+    text-shadow: 0 0 12px rgba(0, 255, 255, 0.5);
+    text-align: center;
+    border-top: 1px solid #222;
+    padding-top: 0.5rem;
+}
+
+/* Grade de bebidas */
+.grid-refris {
+    display: grid;
+    /* 2 colunas que SEMPRE terão o mesmo tamanho (do maior item) */
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.4rem;
+    overflow-y: auto;
+    padding-right: 10px;
+    flex: 1;
+    min-height: 0;
+    width: fit-content;
+}
+
+.grid-refris::-webkit-scrollbar {
+    width: 6px;
+}
+
+.grid-refris::-webkit-scrollbar-thumb {
+    background: rgba(0, 255, 255, 0.4);
+    border-radius: 8px;
+}
+
+/* Botões estéticos */
+.botao-refri {
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.01));
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 0.8rem 0.5rem;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+    color: white;
+    width: 100%;
+    white-space: nowrap;
+    /* Garante que o botão se expanda para o nome maior */
+}
+
+.botao-refri:hover {
+    box-shadow: 0 10px 20px rgba(0, 255, 255, 0.15);
+    border-color: rgba(0, 255, 255, 0.4);
+    background: linear-gradient(145deg, rgba(0, 255, 255, 0.1), rgba(255, 255, 255, 0.01));
+}
+
+.botao-refri:active {
+    transform: translateY(0);
+}
+
+.botao-refri.selecionado {
+    border-color: var(--neon-cyan);
+    background: linear-gradient(145deg, rgba(0, 255, 255, 0.15), rgba(255, 255, 255, 0.01));
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.3), inset 0 0 10px rgba(0, 255, 255, 0.1);
+    transform: translateY(-2px);
+}
+
+.refri-img-wrapper {
+    width: 55px;
+    height: 90px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    filter: drop-shadow(0 10px 10px rgba(0, 0, 0, 0.5));
+    transition: transform 0.4s ease;
+}
+
+.refri-img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.refri-sabor {
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-align: center;
+}
+
+.refri-preco {
+    background: rgba(0, 0, 0, 0.6);
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    font-family: var(--font-digital);
+    font-size: 0.9rem;
+    color: var(--neon-green);
+    border: 1px solid #333;
+}
+
+/* Ranhura de dinheiro */
+.coin-slot {
+    align-self: center;
+    background: #111;
+    border: 2px solid #333;
+    border-radius: 12px;
+    padding: 1.2rem 1.5rem;
+    text-align: center;
+    transition: 0.3s all;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.9);
+    margin-top: auto;
+}
+
+.coin-slot span {
+    font-size: 0.65rem;
+    color: #777;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 600;
+}
+
+.slot-hole {
+    width: 8px;
+    height: 50px;
+    background: #000;
+    border-radius: 20px;
+    box-shadow: inset 4px 0 6px rgba(0, 0, 0, 0.9), 1px 0 0 rgba(255, 255, 255, 0.1);
+    transition: 0.3s all;
+}
+
+/* --- DISPENSER --- */
+.dispenser-container {
+    margin-top: auto;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.dispenser-bin {
+    width: 100%;
+    height: 80px;
+    background: #050505;
+    border: 2px solid #222;
+    border-radius: 12px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: inset 0 10px 20px rgba(0, 0, 0, 0.9), 0 2px 0 rgba(255, 255, 255, 0.05);
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    padding-bottom: 5px;
+}
+
+/* Animação do Refri Caindo */
+.refri-entrega {
+    width: 35px;
+    height: 60px;
+    object-fit: contain;
+    animation: cair-refri 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.8));
+    transform-origin: bottom center;
+}
+
+@keyframes cair-refri {
+    0% {
+        transform: translateY(-120%) rotate(0deg) scaleY(1.2);
+        opacity: 0;
+    }
+
+    60% {
+        /* Bate no fundo e rotaciona 90 graus */
+        transform: translateY(0) rotate(90deg) scaleY(0.8);
+        opacity: 1;
+    }
+
+    80% {
+        /* Quique leve */
+        transform: translateY(-5px) rotate(95deg) scaleY(1.1);
+    }
+
+    100% {
+        /* Posição final deitada */
+        transform: translateY(0) rotate(90deg) scaleY(1);
+    }
+}
+
+/* Quando estiver segurando a moeda sobre a ranhura */
+.ranhura-ativa {
+    border-color: var(--neon-cyan);
+    box-shadow: 0 0 25px rgba(0, 255, 255, 0.2), inset 0 0 20px rgba(0, 0, 0, 0.9);
+}
+
+.ranhura-ativa .slot-hole {
+    box-shadow: inset 0 6px 8px rgba(0, 0, 0, 0.9), 0 0 20px var(--neon-cyan);
+}
+
+/* --- CARTEIRA --- */
+.wallet-panel {
+    width: 320px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.wallet-panel h2 {
+    font-size: 1.6rem;
+    font-weight: 600;
+    margin-bottom: -0.5rem;
+    color: #e2e8f0;
+}
+
+.wallet-panel p {
+    color: #94a3b8;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.moedas-container {
+    display: flex;
+    gap: 1.2rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+}
+
+/* Design super realista/metálico das moedas */
+.moeda {
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 800;
+    font-size: 1.2rem;
+    color: #333;
+    cursor: grab;
+    user-select: none;
+    box-shadow:
+        inset 0 0 0 4px rgba(255, 255, 255, 0.4),
+        inset 0 0 15px rgba(0, 0, 0, 0.3),
+        0 10px 20px rgba(0, 0, 0, 0.5);
+    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.moeda::before {
+    content: '';
+    position: absolute;
+    inset: 4px;
+    border-radius: 50%;
+    border: 2px dashed rgba(0, 0, 0, 0.15);
+}
+
+.moeda:active {
+    cursor: grabbing;
+    transform: scale(0.9);
+}
+
+.moeda:hover {
+    transform: translateY(-8px) scale(1.05);
+}
+
+/* Texturas de Gradiente */
+.moeda-bronze {
+    background: linear-gradient(135deg, #f3a183, #ec6f66);
+    color: #5c2c27;
+}
+
+.moeda-prata {
+    background: linear-gradient(135deg, #e0eafc, #cfdef3);
+    color: #4a5568;
+}
+
+.moeda-ouro {
+    background: linear-gradient(135deg, #f6d365, #fda085);
+    color: #744210;
+}
+
+/* Responsividade Básica */
+@media (max-width: 820px) {
+    .app-container {
+        flex-direction: column;
+        align-items: center;
+        height: auto;
+        overflow-y: auto;
+    }
+
+    #maquina {
+        min-width: 95%;
+        height: 600px;
+    }
+
+    .wallet-panel {
+        width: 100%;
+        max-width: 500px;
+    }
+}
